@@ -1,17 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Lista por area</h1>
-    <ul>
-        {% for e in object_list %}
-            <li>{{ e }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title%}
+    Lista empleados por departamento
+{% endblock title %}
+
+{% block content %}
+
+    {% include 'includes/header.html' %}
+
+    <div class="container">
+        <div class="row">Empleados por Area</div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">NOMBRE</th>
+                    <th scope="col">APELLIDOS</th>
+                    <th scope="col">DEPARTAMENTO</th>
+                    <th scope="col">ACCION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for e in empleados %}
+                        <tr>
+                            <th scope="row">{{ e.id }}</th>
+                            <td>{{ e.first_name }}</td>
+                            <td>{{ e.last_name }}</td>
+                            <td>{{ e.departamento}}</td>
+                            <th scope="col"><a class="btn btn-primary" href="{% url 'persona_app:empleado_detail' e.id %}" role="button">Ver</a></th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+
+        </div>
+    </div>
+ 
+{% endblock content %}

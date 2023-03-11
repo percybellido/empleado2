@@ -11,13 +11,26 @@ from django.views.generic import (
 
 from .models import Empleado
 
+class InicioView(TemplateView):
+    template_name='inicio.html'
+
 class ListAllEmpleados(ListView):
     template_name='persona/list_all.html'
     paginate_by=4
-    model = Empleado
+    ordering='first_name'
+    context_object_name='empleados'
+    
+
+    def get_queryset(self):
+        palabra_clave=self.request.GET.get("kword", '')
+        lista= Empleado.objects.filter(
+            first_name__icontains=palabra_clave
+        )
+        return lista
 
 class ListByAreaEmpleado(ListView):
     template_name='persona/list_by_area.html'
+    context_object_name='empleados'
     
     def get_queryset(self):
         area=self.kwargs['shortname']
