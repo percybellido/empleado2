@@ -10,6 +10,7 @@ from django.views.generic import (
 )
 
 from .models import Empleado
+from .forms import EmpleadoForm
 
 class InicioView(TemplateView):
     template_name='inicio.html'
@@ -27,6 +28,15 @@ class ListAllEmpleados(ListView):
             first_name__icontains=palabra_clave
         )
         return lista
+    
+class ListEmpleadosAdmin(ListView):
+    template_name='persona/list_empleados.html'
+    paginate_by=8
+    ordering='first_name'
+    context_object_name='empleados'
+    model=Empleado
+
+    
 
 class ListByAreaEmpleado(ListView):
     template_name='persona/list_by_area.html'
@@ -76,14 +86,8 @@ class SuccessView(TemplateView):
 class EmpleadoCreateView(CreateView):
     template_name="persona/add.html"
     model= Empleado
-    fields = [
-        'first_name',
-        'last_name',
-        'job',
-        'departamento',
-        'habilidades',
-    ]
-    success_url=reverse_lazy('persona_app:correcto')
+    form_class=EmpleadoForm
+    success_url=reverse_lazy('persona_app:empleados_admin')
 
     def form_valid(self, form):
         empleado = form.save(commit=False)
@@ -102,7 +106,7 @@ class EmpleadoUpdateView(UpdateView):
         'habilidades',
     ]
 
-    success_url=reverse_lazy('persona_app:correcto')
+    success_url=reverse_lazy('persona_app:empleados_admin')
 
     def post(self, request, *args, **kwargs):
         self.object=self.get_object()
@@ -120,6 +124,6 @@ class EmpleadoUpdateView(UpdateView):
 class EmpleadoDeleteView(DeleteView):
     model=Empleado
     template_name= "persona/delete.html"
-    success_url=reverse_lazy('persona_app:correcto')
+    success_url=reverse_lazy('persona_app:empleados_admin')
     
 

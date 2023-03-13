@@ -1,18 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Actualizar  Datos del Empleado</h1>
+{% extends 'base.html' %}
 
-    <form method="POST">{% csrf_token %}
-        {{ form.as_p}}
-        <button type="submit">Actualizar</button>
-    </form>
+{% block title%}
+    Editar Empleado
+{% endblock title %}
+
+{% block content %}
+
+    {% include 'includes/header.html' %}
+    <div class="container-fluid row actualizar">
+        <div class="col pt-20 mt-20">
+            <h1>Actualizar  Datos del Empleado</h1>
+        </div>
+
+        <form class="col-12" method="POST">{% csrf_token %}
+            <div class="row">
+                <label class="form-label col">Nombres:
+                    {{ form.first_name }}
+                </label>
+                
+            </div>
+            <div class="row">
+                <label class="form-label col">Apellidos:
+                    {{ form.last_name }}
+                </label>
+                
+            </div>
+            <div class="row">
+                <label class="form-label col">Trabajo:
+                    {{ form.job }}
+                </label>
+                
+            </div>
+            <div class="row">
+                <label class="form-label col">Area:
+                    {{ form.departamento }}
+                </label>
+                
+            </div>
+            <div class="row">
+                <label class="form-label col">Habilidades:
+                    {{ form.habilidades }}
+                </label>
+                
+            </div>
+            
+            <button class="col-12 d-flex justify-content-center btn btn-primary" type="submit">Actualizar</button>
+        </form>
+
+    </div>
     
-</body>
-</html>
+
+        
+
+{% endblock content%}
+    
